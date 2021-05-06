@@ -1,0 +1,11 @@
+target
+.*.swp
+.*.swo
+*.iml
+.DS_Store
+.idea
+.gradle
+/build
+/out
+/gradle/wrapper/
+/**/build/
