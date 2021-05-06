@@ -40,6 +40,9 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    testImplementation 'net.javacrumbs.json-unit:json-unit-fluent:2.25.0'
+    testImplementation 'org.assertj:assertj-core:3.17.1'
 }
 
 tasks.withType(JavaCompile) {
@@ -58,6 +61,18 @@ tasks.withType(Test) {
     useJUnitPlatform()
 }
 
-application {
-    mainClassName = 'com.bluecc.ws.charts.SimpleServer'
+task(runSimple, dependsOn: 'classes', type: JavaExec) {
+    main = 'com.bluecc.ws.charts.SimpleServer'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'mrhaki'
+    systemProperty 'simple.message', 'Hello '
 }
+
+application {
+//    mainClassName = 'com.bluecc.ws.charts.SimpleServer'
+//    mainClassName = 'com.bluecc.ws.charts.stuffs.Main'
+    // ./gradlew run -PchooseMain=com.bluecc.ws.charts.stuffs.Main
+    // ./gradlew run -PchooseMain=com.bluecc.ws.charts.SimpleClient
+    mainClassName = project.findProperty("chooseMain").toString()
+}
+
