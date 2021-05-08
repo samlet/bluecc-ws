@@ -3,4 +3,5 @@ include 'charts'
 include 'common'
 include 'delegator'
 include 'facader'
+include 'rpcs'
 
