@@ -38,6 +38,21 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation group: 'com.google.guava', name: 'guava', version: '22.0'
 
+    compile group: 'com.uber.cadence', name: 'cadence-client', version: '2.6.3'
+    compile group: 'commons-configuration', name: 'commons-configuration', version: '1.9'
+
+    // https://mvnrepository.com/artifact/net.sf.smc/smc
+//    implementation group: 'net.sf.smc', name: 'smc', version: '7.2.0', ext: 'pom'
+    // https://mvnrepository.com/artifact/net.sf.smc/library
+    implementation group: 'net.sf.smc', name: 'library', version: '7.2.0'
+    // https://mvnrepository.com/artifact/net.sf.smc/parser
+    implementation group: 'net.sf.smc', name: 'parser', version: '7.2.0'
+    // https://mvnrepository.com/artifact/net.sf.smc/generator
+    implementation group: 'net.sf.smc', name: 'generator', version: '7.2.0'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 

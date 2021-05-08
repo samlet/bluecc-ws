@@ -1,3 +1,6 @@
 rootProject.name = 'workspaces'
 include 'charts'
 include 'common'
+include 'delegator'
+include 'facader'
+
