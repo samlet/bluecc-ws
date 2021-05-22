@@ -94,6 +94,11 @@ application {
 //    mainClassName = 'com.bluecc.ws.charts.stuffs.Main'
     // ./gradlew run -PchooseMain=com.bluecc.ws.charts.stuffs.Main
     // ./gradlew run -PchooseMain=com.bluecc.ws.charts.SimpleClient
+
+    // the command line arguments can be passed with --args. For example,
+    // if you want to launch the application with command line arguments foo --bar,
+    // you can use gradle run --args="foo --bar"
+    // ⊕ [The Application Plugin](https://docs.gradle.org/current/userguide/application_plugin.html)
     mainClassName = project.findProperty("chooseMain").toString()
 }
 

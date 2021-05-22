@@ -15,8 +15,18 @@
  *  permissions and limitations under the License.
  */
 
-package com.bluecc.ws.charts.fixtures.common;
+package com.bluecc.ws.charts.fixtures.fileprocessing;
 
-public class WorkflowConstants {
-  public static final String DOMAIN = "alfin";
+import com.uber.cadence.workflow.WorkflowMethod;
+
+import java.net.URL;
+
+/** Contract for file processing workflow. */
+public interface FileProcessingWorkflow {
+
+  @WorkflowMethod(
+    taskList = FileProcessingWorker.TASK_LIST,
+    executionStartToCloseTimeoutSeconds = 30
+  )
+  void processFile(URL source, URL destination);
 }

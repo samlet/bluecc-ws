@@ -15,55 +15,53 @@
  *  permissions and limitations under the License.
  */
 
-package com.bluecc.ws.charts.fixtures.bookingsaga;
+package com.bluecc.ws.charts.fixtures.fileprocessing;
 
-import com.bluecc.ws.charts.common.WorkflowConstants;
 import com.uber.cadence.client.WorkflowClient;
 import com.uber.cadence.client.WorkflowClientOptions;
-import com.uber.cadence.client.WorkflowException;
 import com.uber.cadence.serviceclient.ClientOptions;
 import com.uber.cadence.serviceclient.WorkflowServiceTChannel;
 import com.uber.cadence.worker.Worker;
 import com.uber.cadence.worker.WorkerFactory;
 
-public class TripBookingSaga {
+import java.lang.management.ManagementFactory;
 
-  static final String TASK_LIST = "TripBooking";
+import static com.bluecc.ws.charts.common.WorkflowConstants.DOMAIN;
 
-  @SuppressWarnings("CatchAndPrintStackTrace")
+/**
+ * This is the process that hosts all workflows and activities in this sample. Run multiple
+ * instances of the worker in different windows. Then start a workflow by running the
+ * FileProcessingStarter. Note that all activities always execute on the same worker. But each time
+ * they might end up on a different worker as the first activity is dispatched to the common task
+ * list.
+ */
+public class FileProcessingWorker {
+
+  static final String TASK_LIST = "FileProcessing";
+
   public static void main(String[] args) {
+
+    String hostSpecifiTaskList = ManagementFactory.getRuntimeMXBean().getName();
+
     // Get a new client
     WorkflowClient workflowClient =
         WorkflowClient.newInstance(
             new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
-            WorkflowClientOptions.newBuilder().setDomain(WorkflowConstants.DOMAIN).build());
+            WorkflowClientOptions.newBuilder().setDomain(DOMAIN).build());
     // Get worker to poll the common task list.
     WorkerFactory factory = WorkerFactory.newInstance(workflowClient);
     final Worker workerForCommonTaskList = factory.newWorker(TASK_LIST);
-    workerForCommonTaskList.registerWorkflowImplementationTypes(TripBookingWorkflowImpl.class);
-    TripBookingActivities tripBookingActivities = new TripBookingActivitiesImpl();
-    workerForCommonTaskList.registerActivitiesImplementations(tripBookingActivities);
+    workerForCommonTaskList.registerWorkflowImplementationTypes(FileProcessingWorkflowImpl.class);
+    StoreActivitiesImpl storeActivityImpl = new StoreActivitiesImpl(hostSpecifiTaskList);
+    workerForCommonTaskList.registerActivitiesImplementations(storeActivityImpl);
+
+    // Get worker to poll the host-specific task list.
+    final Worker workerForHostSpecificTaskList = factory.newWorker(hostSpecifiTaskList);
+    workerForHostSpecificTaskList.registerActivitiesImplementations(storeActivityImpl);
 
     // Start all workers created by this factory.
     factory.start();
     System.out.println("Worker started for task list: " + TASK_LIST);
-
-    // now we can start running instances of our saga - its state will be persisted
-    TripBookingWorkflow trip1 = workflowClient.newWorkflowStub(TripBookingWorkflow.class);
-    try {
-      trip1.bookTrip("trip1");
-    } catch (WorkflowException e) {
-      // Expected
-      e.printStackTrace();
-    }
-
-    try {
-      TripBookingWorkflow trip2 = workflowClient.newWorkflowStub(TripBookingWorkflow.class);
-      trip2.bookTrip("trip2");
-    } catch (WorkflowException e) {
-      e.printStackTrace();
-    }
-
-    System.exit(0);
+    System.out.println("Worker Started for activity task List: " + hostSpecifiTaskList);
   }
 }

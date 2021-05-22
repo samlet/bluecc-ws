@@ -15,7 +15,7 @@
  *  permissions and limitations under the License.
  */
 
-package com.bluecc.ws.charts.fixtures.common;
+package com.bluecc.ws.charts.common;
 
 import com.uber.cadence.DomainAlreadyExistsError;
 import com.uber.cadence.RegisterDomainRequest;

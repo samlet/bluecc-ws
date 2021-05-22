@@ -1,0 +1,13 @@
+srv:
+	../gradlew run -PchooseMain=com.bluecc.ws.charts.SimpleClient
+charts:
+    ../gradlew run -PchooseMain=com.bluecc.ws.charts.ChartServices
+
+# $ just history "wf_id run_id"
+history args:
+    ../gradlew run -PchooseMain=com.bluecc.ws.charts.common.WorkflowExecutionHistoryPrinter --args="{{args}}"
+file-worker:
+    ../gradlew run -PchooseMain=com.bluecc.ws.charts.fixtures.fileprocessing.FileProcessingWorker
+file:
+    ../gradlew run -PchooseMain=com.bluecc.ws.charts.fixtures.fileprocessing.FileProcessingStarter
+

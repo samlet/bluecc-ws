@@ -78,7 +78,7 @@ dependencies {
 }
 
 application {
-    mainClassName = 'example.armeria.grpc.Main'
+    mainClassName = 'example.armeria.grpc.ExampleMain'
 }
 
 tasks.withType(JavaCompile) {

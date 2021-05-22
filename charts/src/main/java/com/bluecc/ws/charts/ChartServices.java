@@ -28,6 +28,7 @@ public class ChartServices {
         }.decorate(LoggingService.newDecorator())); // Enable logging
 
         sb.annotatedService("/sys", new SysInfo());
+        sb.annotatedService("/workflow", new WorkflowInfo());
 
         Server server = sb.build();
         CompletableFuture<Void> future = server.start();
