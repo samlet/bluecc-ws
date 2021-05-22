@@ -19,13 +19,12 @@ package com.bluecc.ws.charts.fixtures.common;
 
 import com.uber.cadence.DomainAlreadyExistsError;
 import com.uber.cadence.RegisterDomainRequest;
+import com.uber.cadence.serviceclient.ClientOptions;
 import com.uber.cadence.serviceclient.IWorkflowService;
 import com.uber.cadence.serviceclient.WorkflowServiceTChannel;
 import org.apache.thrift.TException;
 
 import java.io.IOException;
-
-import static com.bluecc.ws.charts.fixtures.common.SampleConstants.DOMAIN;
 
 /**
  * Registers the "sample" domain with the Cadence service.
@@ -35,22 +34,22 @@ import static com.bluecc.ws.charts.fixtures.common.SampleConstants.DOMAIN;
 public class RegisterDomain {
 
   public static void main(String[] args) throws TException, IOException {
-    IWorkflowService cadenceService = new WorkflowServiceTChannel();
+    IWorkflowService cadenceService = new WorkflowServiceTChannel(ClientOptions.defaultInstance());
     RegisterDomainRequest request = new RegisterDomainRequest();
     request.setDescription("Java Samples");
     request.setEmitMetric(false);
-    request.setName(DOMAIN);
+    request.setName(WorkflowConstants.DOMAIN);
     int retentionPeriodInDays = 1;
     request.setWorkflowExecutionRetentionPeriodInDays(retentionPeriodInDays);
     try {
       cadenceService.RegisterDomain(request);
       System.out.println(
           "Successfully registered domain \""
-              + DOMAIN
+              + WorkflowConstants.DOMAIN
               + "\" with retentionDays="
               + retentionPeriodInDays);
     } catch (DomainAlreadyExistsError e) {
-      System.out.println("Domain \"" + DOMAIN + "\" is already registered");
+      System.out.println("Domain \"" + WorkflowConstants.DOMAIN + "\" is already registered");
     }
     System.exit(0);
   }

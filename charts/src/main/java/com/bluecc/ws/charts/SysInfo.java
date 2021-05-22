@@ -24,21 +24,10 @@ public class SysInfo {
     public GenericResponse timestamp(@Header String xWorkload,
                                      @Header String xToken,
                                      @RequestObject RequestInfo input) {
-        final String caller = input.caller;
+        final String caller = input.getCaller();
         logger.info("caller is {}, workload: {}, token: {}", caller, xWorkload, xToken);
         return new GenericResponse(GenericResponse.SUCCESS, caller,
                 ImmutableMap.of("ts", System.currentTimeMillis()));
     }
 
-    public static final class RequestInfo {
-        private String caller;
-
-        public String getCaller() {
-            return caller;
-        }
-
-        public void setCaller(String caller) {
-            this.caller = caller;
-        }
-    }
 }

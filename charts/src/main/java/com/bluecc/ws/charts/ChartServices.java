@@ -16,7 +16,6 @@ public class ChartServices {
         ServerBuilder sb = Server.builder();
         sb.http(1080);
 
-        // Add a simple 'Hello, world!' service.
         sb.service("/", (ctx, req) -> HttpResponse.of("ok!"));
 
         // Using path variables:

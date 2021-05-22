@@ -15,8 +15,13 @@
  *  permissions and limitations under the License.
  */
 
-package com.bluecc.ws.charts.fixtures.common;
+package com.bluecc.ws.charts.fixtures.bookingsaga;
 
-public class SampleConstants {
-  public static final String DOMAIN = "sample";
+import com.uber.cadence.workflow.WorkflowMethod;
+
+
+public interface TripBookingWorkflow {
+
+  @WorkflowMethod(executionStartToCloseTimeoutSeconds = 3600, taskList = TripBookingSaga.TASK_LIST)
+  void bookTrip(String name);
 }

@@ -38,8 +38,14 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation group: 'com.google.guava', name: 'guava', version: '22.0'
 
-    compile group: 'com.uber.cadence', name: 'cadence-client', version: '2.6.3'
+//    compile group: 'com.uber.cadence', name: 'cadence-client', version: '2.6.3'
+    compile group: 'com.uber.cadence', name: 'cadence-client', version: '3.0.0'
     compile group: 'commons-configuration', name: 'commons-configuration', version: '1.9'
+
+    compile group: 'com.uber.m3', name: 'tally-core', version: '0.10.0'
+    compile group: 'com.uber.m3', name: 'tally-prometheus', version: '0.10.0'
+    compile group: 'io.prometheus', name: 'simpleclient', version: '0.10.0'
+    compile group: 'io.prometheus', name: 'simpleclient_httpserver', version: '0.10.0'
 
     // https://mvnrepository.com/artifact/net.sf.smc/smc
 //    implementation group: 'net.sf.smc', name: 'smc', version: '7.2.0', ext: 'pom'
