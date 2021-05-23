@@ -1,3 +1,5 @@
+build:
+    ../gradlew build --exclude-task test --warning-mode none
 srv:
 	../gradlew run -PchooseMain=com.bluecc.ws.charts.SimpleClient
 charts:
@@ -11,3 +13,5 @@ file-worker:
 file:
     ../gradlew run -PchooseMain=com.bluecc.ws.charts.fixtures.fileprocessing.FileProcessingStarter
 
+domain name:
+	cadence --domain {{name}} domain describe

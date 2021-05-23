@@ -1,6 +1,6 @@
 package com.bluecc.ws.charts;
 
-public final class RequestInfo {
+public class RequestInfo {
     private String caller;
 
     public String getCaller() {
