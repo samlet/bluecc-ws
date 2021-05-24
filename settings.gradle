@@ -4,4 +4,5 @@ include 'common'
 include 'delegator'
 include 'facader'
 include 'rpcs'
+include 'apiset'
 

@@ -37,31 +37,31 @@ import static com.bluecc.ws.charts.common.WorkflowConstants.DOMAIN;
  */
 public class FileProcessingWorker {
 
-  static final String TASK_LIST = "FileProcessing";
+    static final String TASK_LIST = "FileProcessing";
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    String hostSpecifiTaskList = ManagementFactory.getRuntimeMXBean().getName();
+        String hostSpecifiTaskList = ManagementFactory.getRuntimeMXBean().getName();
 
-    // Get a new client
-    WorkflowClient workflowClient =
-        WorkflowClient.newInstance(
-            new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
-            WorkflowClientOptions.newBuilder().setDomain(DOMAIN).build());
-    // Get worker to poll the common task list.
-    WorkerFactory factory = WorkerFactory.newInstance(workflowClient);
-    final Worker workerForCommonTaskList = factory.newWorker(TASK_LIST);
-    workerForCommonTaskList.registerWorkflowImplementationTypes(FileProcessingWorkflowImpl.class);
-    StoreActivitiesImpl storeActivityImpl = new StoreActivitiesImpl(hostSpecifiTaskList);
-    workerForCommonTaskList.registerActivitiesImplementations(storeActivityImpl);
+        // Get a new client
+        WorkflowClient workflowClient =
+                WorkflowClient.newInstance(
+                        new WorkflowServiceTChannel(ClientOptions.defaultInstance()),
+                        WorkflowClientOptions.newBuilder().setDomain(DOMAIN).build());
+        // Get worker to poll the common task list.
+        WorkerFactory factory = WorkerFactory.newInstance(workflowClient);
+        final Worker workerForCommonTaskList = factory.newWorker(TASK_LIST);
+        workerForCommonTaskList.registerWorkflowImplementationTypes(FileProcessingWorkflowImpl.class);
+        StoreActivitiesImpl storeActivityImpl = new StoreActivitiesImpl(hostSpecifiTaskList);
+        workerForCommonTaskList.registerActivitiesImplementations(storeActivityImpl);
 
-    // Get worker to poll the host-specific task list.
-    final Worker workerForHostSpecificTaskList = factory.newWorker(hostSpecifiTaskList);
-    workerForHostSpecificTaskList.registerActivitiesImplementations(storeActivityImpl);
+        // Get worker to poll the host-specific task list.
+        final Worker workerForHostSpecificTaskList = factory.newWorker(hostSpecifiTaskList);
+        workerForHostSpecificTaskList.registerActivitiesImplementations(storeActivityImpl);
 
-    // Start all workers created by this factory.
-    factory.start();
-    System.out.println("Worker started for task list: " + TASK_LIST);
-    System.out.println("Worker Started for activity task List: " + hostSpecifiTaskList);
-  }
+        // Start all workers created by this factory.
+        factory.start();
+        System.out.println("Worker started for task list: " + TASK_LIST);
+        System.out.println("Worker Started for activity task List: " + hostSpecifiTaskList);
+    }
 }
